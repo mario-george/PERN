@@ -49,6 +49,22 @@ app.get(
     return res.json(searchedTodo.rows[0]);
   })
 );
+// update todo by id
+app.put(
+  "/todo/:id",
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    let { id } = req.params;
+
+    let { description } = req.body;
+    if (!id) {
+      throw new Error("id of the todo list is not given");
+    }
+    let queryString = `UPDATE todo SET description=$1 WHERE t_id=$2`;
+
+    let updatedToDo = await pool.query(queryString, [description, id]);
+    return res.json("To do has been updated!");
+  })
+);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
