@@ -65,7 +65,20 @@ app.put(
     return res.json("To do has been updated!");
   })
 );
-
+//delete a todo by id
+app.delete(
+  "/todo/:id",
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    let { id } = req.params;
+    if (!id) {
+      throw new Error("id of the todo list is not given");
+    }
+    let queryString = `DELETE FROM todo WHERE t_id=$1`;
+    let deletedToDo = await pool.query(queryString, [id]);
+    console.log("deletedToDo", deletedToDo);
+    return res.json("To do has been deleted!");
+  })
+);
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
