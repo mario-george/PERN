@@ -20,6 +20,6 @@ const useTodoList = ({ reloadPage }: useTodoListParams) => {
     fetchItems()
   }, [reloadPage]);
 
-  return {}
+  return {todoItems}
 };
 export default useTodoList;
