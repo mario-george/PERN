@@ -36,6 +36,19 @@ app.get(
     return res.json(todoList.rows);
   })
 );
+// get todo by id
+app.get(
+  "/todo/:id",
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    let { id } = req.params;
+    if (!id) {
+      throw new Error("id of the todo list is not given");
+    }
+    let queryString = `SELECT * FROM todo WHERE t_id = $1`;
+    let searchedTodo = await pool.query(queryString, [id]);
+    return res.json(searchedTodo.rows[0]);
+  })
+);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
