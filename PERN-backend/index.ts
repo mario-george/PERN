@@ -24,7 +24,7 @@ app.post(
 `;
     let newTODo = await pool.query(queryString, [description]);
 console.log("newTODo",newTODo)
-    return res.json({message:"todo has been added successfully",todo:newTODo.rows[0]});
+    return res.status(201).json({message:"todo has been added successfully",todo:newTODo.rows[0]});
   })
 );
 // get all todos
@@ -33,7 +33,7 @@ app.get(
   catchAsync(async (req: Request, res: Response) => {
     let queryString = `SELECT * FROM todo;`;
     let todoList = await pool.query(queryString);
-    return res.json(todoList.rows);
+    return res.json({items:todoList.rows});
   })
 );
 // get todo by id
