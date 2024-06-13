@@ -14,12 +14,13 @@ interface TodoTableProps {
   description: string;
   setReloadPage: (val: boolean) => void;
   reloadPage: boolean;
+  editOpenHandler: (description: string, t_id: number) => void;
 }
 export default function TodoTable({
   todoItems,
   description,
   setReloadPage,
-  reloadPage,
+  reloadPage,editOpenHandler
 }: TodoTableProps) {
   const resetPageHandler = () => {
     setReloadPage(!reloadPage);
@@ -73,7 +74,8 @@ export default function TodoTable({
                       colorScheme="cyan"
                       variant="outline"
                       onClick={() => {
-                        editTodo(item.t_id);
+                        // editTodo(item.t_id);
+                        editOpenHandler( item.description, item.t_id);
                       }}
                     >
                       Edit
@@ -94,13 +96,11 @@ export default function TodoTable({
               ))
             ) : (
               <>
-             <Tr>
-<Td>There are no items!</Td>
-
-             </Tr>
+                <Tr>
+                  <Td>There are no items!</Td>
+                </Tr>
               </>
             )}
-            
           </Tbody>
         </Table>
       </TableContainer>
