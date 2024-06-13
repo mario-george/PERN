@@ -15,7 +15,7 @@ interface TodoItem {
     description:string
 
 }
-const useEditDialog = ({setReloadPage,reloadPage}: {setReloadPage:(boolean)=>void,reloadPage:boolean}) => {
+const useEditDialog = ({setReloadPage,reloadPage}: {setReloadPage:(val:boolean)=>void,reloadPage:boolean}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<null | HTMLElement|any>();
   const [todoInfo,setTodoInfo] = useState<TodoItem>({
