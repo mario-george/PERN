@@ -2,15 +2,17 @@ import { useState } from "react";
 import { Button, Input,  } from "@chakra-ui/react";
 import useTodoList from "./useTodoList";
 import TodoTable from "./TodoTable";
+import useEditDialog from "./utilities/useEditDialog";
 const useTodoForm = ()=>{
 const [desc,setDesc] = useState("");
 const [reloadPage,setReloadPage] = useState(false);
 const {todoItems } = useTodoList({reloadPage});
+let {editOpenHandler,EditModal} = useEditDialog({setReloadPage,reloadPage})
 let TodoTableProps ={
     todoItems,
     description:desc,
     setReloadPage,
-    reloadPage
+    reloadPage,editOpenHandler
 
 }
 const addTodo =async ()=>{
@@ -43,6 +45,7 @@ let TodoFormComponent = <>
 { toDoComponent}
 {todoListTableComponent
 }
+{EditModal}
 
 </> 
     return {TodoFormComponent}
