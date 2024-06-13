@@ -1,8 +1,18 @@
 import { useState } from "react";
-import { Button, Input } from "@chakra-ui/react";
-const useTodo = ()=>{
+import { Button, Input,  } from "@chakra-ui/react";
+import useTodoList from "./useTodoList";
+import TodoTable from "./TodoTable";
+const useTodoForm = ()=>{
 const [desc,setDesc] = useState("");
 const [reloadPage,setReloadPage] = useState(false);
+const {todoItems } = useTodoList({reloadPage});
+let TodoTableProps ={
+    todoItems,
+    description:desc,
+    setReloadPage,
+    reloadPage
+
+}
 const addTodo =async ()=>{
     let options = {
         method:"POST",
@@ -19,15 +29,23 @@ const addTodo =async ()=>{
     console.log("resData",resData)
  
     setDesc("");
+    setReloadPage(!reloadPage);
 
 }
 let toDoComponent = (
-    <div>
+    <div className="container flex space-x-3 p-3 my-3">
         <Input type="text" value={desc} onChange={(e)=>setDesc(e.target.value)} />
         <Button colorScheme="teal" onClick={addTodo}>Add</Button>
     </div>
 )
-    return {toDoComponent}
+let todoListTableComponent  = <TodoTable {...TodoTableProps} />
+let TodoFormComponent = <>
+{ toDoComponent}
+{todoListTableComponent
 }
 
-export default useTodo;
+</> 
+    return {TodoFormComponent}
+}
+
+export default useTodoForm;
